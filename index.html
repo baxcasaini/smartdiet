@@ -403,7 +403,283 @@
             </div>
             
             <div class="features">
-                <div class="feature-card">
+                <div class="roadmap-item">
+                    <div class="roadmap-content">
+                        <h3 lang="it">Integrazione con dispositivi fitness</h3>
+                        <h3 lang="en">Integration with fitness devices</h3>
+                        <p lang="it">Collegamento con smartwatch e fitness tracker per adattare automaticamente la dieta al tuo livello di attività quotidiana.</p>
+                        <p lang="en">Connection with smartwatches and fitness trackers to automatically adapt the diet to your daily activity level.</p>
+                    </div>
+                </div>
+                
+                <div class="roadmap-item">
+                    <div class="roadmap-content">
+                        <h3 lang="it">Ricette interattive</h3>
+                        <h3 lang="en">Interactive recipes</h3>
+                        <p lang="it">Aggiunta di istruzioni dettagliate passo-passo per la preparazione dei pasti, con opzioni video e immagini.</p>
+                        <p lang="en">Addition of detailed step-by-step instructions for meal preparation, with video and image options.</p>
+                    </div>
+                </div>
+                
+                <div class="roadmap-item">
+                    <div class="roadmap-content">
+                        <h3 lang="it">Integrazione con servizi di consegna spesa</h3>
+                        <h3 lang="en">Integration with grocery delivery services</h3>
+                        <p lang="it">Possibilità di ordinare direttamente gli ingredienti necessari attraverso servizi di consegna della spesa.</p>
+                        <p lang="en">Possibility to directly order the necessary ingredients through grocery delivery services.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="cta" style="background-color: #333;">
+        <div class="container">
+            <h2 lang="it">Pronto a migliorare la tua alimentazione?</h2>
+            <h2 lang="en">Ready to improve your diet?</h2>
+            <p lang="it">Inizia oggi il tuo percorso verso uno stile di vita più sano con SmartDiet.</p>
+            <p lang="en">Start your journey toward a healthier lifestyle with SmartDiet today.</p>
+            <a href="https://t.me/smartdiet_bot" class="btn" style="background-color: #ffc107;" lang="it">Avvia il bot su Telegram</a>
+            <a href="https://t.me/smartdiet_bot" class="btn" style="background-color: #ffc107;" lang="en">Start the bot on Telegram</a>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="container">
+            <p lang="it">&copy; 2025 SmartDiet. Tutti i diritti riservati.</p>
+            <p lang="en">&copy; 2025 SmartDiet. All rights reserved.</p>
+            <p lang="it">Sviluppato con ❤️ per aiutarti a raggiungere i tuoi obiettivi nutrizionali.</p>
+            <p lang="en">Developed with ❤️ to help you achieve your nutritional goals.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Language switcher functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const langButtons = document.querySelectorAll('.language-btn');
+            
+            langButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const lang = this.getAttribute('data-lang');
+                    
+                    // Remove active class from all buttons
+                    langButtons.forEach(btn => btn.classList.remove('active'));
+                    
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                    
+                    // Set the language class on the body
+                    document.body.className = '';
+                    document.body.classList.add('lang-' + lang);
+                    
+                    // Store the language preference in localStorage
+                    localStorage.setItem('preferred-language', lang);
+                });
+            });
+            
+            // Check if there's a stored language preference
+            const storedLang = localStorage.getItem('preferred-language');
+            if (storedLang) {
+                // Find the button for the stored language
+                const storedLangButton = document.querySelector(`.language-btn[data-lang="${storedLang}"]`);
+                if (storedLangButton) {
+                    // Trigger a click on that button
+                    storedLangButton.click();
+                }
+            }
+            
+            // Logo Canvas Logic
+            const canvas = document.getElementById('logoCanvas');
+            const ctx = canvas.getContext('2d');
+            const width = canvas.width;
+            const height = canvas.height;
+            const centerX = width / 2;
+            const centerY = height / 2;
+            
+            // Logo configuration
+            const config = {
+                backgroundColor: '#4CAF50',
+                plateColor: '#FFFFFF',
+                foodItems: [
+                    { type: 'apple', color: '#FF5252', x: centerX - 12, y: centerY - 5, radius: 7 },
+                    { type: 'broccoli', color: '#66BB6A', x: centerX + 5, y: centerY - 2, size: 9 },
+                    { type: 'carrot', color: '#FF9800', x: centerX - 2, y: centerY + 7, size: 8 }
+                ],
+                plateRadius: 35,
+                plateInnerRadius: 30,
+                rotation: 0,
+                animate: true,
+                animationSpeed: 0.005
+            };
+            
+            // Draw the plate
+            function drawPlate() {
+                // Outer circle (plate)
+                ctx.fillStyle = config.plateColor;
+                ctx.beginPath();
+                ctx.arc(centerX, centerY, config.plateRadius, 0, Math.PI * 2);
+                ctx.fill();
+                
+                // Inner circle (plate inner)
+                ctx.fillStyle = config.backgroundColor;
+                ctx.beginPath();
+                ctx.arc(centerX, centerY, config.plateInnerRadius, 0, Math.PI * 2);
+                ctx.fill();
+                
+                // Fork and knife silhouettes
+                drawUtensils();
+            }
+            
+            // Draw fork and knife silhouettes
+            function drawUtensils() {
+                ctx.save();
+                ctx.translate(centerX, centerY);
+                ctx.rotate(config.rotation);
+                
+                // Draw fork
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
+                ctx.beginPath();
+                ctx.moveTo(-10, -20);
+                ctx.lineTo(-7, -20);
+                ctx.lineTo(-7, -5);
+                ctx.lineTo(-12, 0);
+                ctx.lineTo(-15, -2);
+                ctx.lineTo(-10, -7);
+                ctx.lineTo(-10, -20);
+                ctx.fill();
+                
+                // Draw knife
+                ctx.beginPath();
+                ctx.moveTo(7, -20);
+                ctx.lineTo(12, -20);
+                ctx.lineTo(15, -2);
+                ctx.lineTo(12, 0);
+                ctx.lineTo(10, -2);
+                ctx.lineTo(7, -20);
+                ctx.fill();
+                
+                ctx.restore();
+            }
+            
+            // Draw food items
+            function drawFoodItems() {
+                ctx.save();
+                ctx.translate(centerX, centerY);
+                ctx.rotate(config.rotation);
+                
+                config.foodItems.forEach(item => {
+                    const x = item.x - centerX;
+                    const y = item.y - centerY;
+                    
+                    switch(item.type) {
+                        case 'apple':
+                            drawApple(x, y, item.radius, item.color);
+                            break;
+                        case 'broccoli':
+                            drawBroccoli(x, y, item.size, item.color);
+                            break;
+                        case 'carrot':
+                            drawCarrot(x, y, item.size, item.color);
+                            break;
+                    }
+                });
+                
+                ctx.restore();
+            }
+            
+            // Draw an apple
+            function drawApple(x, y, radius, color) {
+                // Apple body
+                ctx.fillStyle = color;
+                ctx.beginPath();
+                ctx.arc(x, y, radius, 0, Math.PI * 2);
+                ctx.fill();
+                
+                // Apple stem
+                ctx.fillStyle = '#5D4037';
+                ctx.fillRect(x - 0.5, y - radius - 2, 1, 2);
+                
+                // Apple leaf
+                ctx.fillStyle = '#66BB6A';
+                ctx.beginPath();
+                ctx.ellipse(x + 1.5, y - radius - 1, 2, 1, Math.PI / 4, 0, Math.PI * 2);
+                ctx.fill();
+            }
+            
+            // Draw broccoli
+            function drawBroccoli(x, y, size, color) {
+                // Stem
+                ctx.fillStyle = '#8D6E63';
+                ctx.fillRect(x - 1, y, 2, size);
+                
+                // Florets
+                ctx.fillStyle = color;
+                ctx.beginPath();
+                ctx.arc(x, y - size/2, size/2, 0, Math.PI * 2);
+                ctx.fill();
+                
+                ctx.beginPath();
+                ctx.arc(x - size/3, y - size/3, size/3, 0, Math.PI * 2);
+                ctx.fill();
+                
+                ctx.beginPath();
+                ctx.arc(x + size/3, y - size/3, size/3, 0, Math.PI * 2);
+                ctx.fill();
+            }
+            
+            // Draw carrot
+            function drawCarrot(x, y, size, color) {
+                // Carrot body
+                ctx.fillStyle = color;
+                ctx.beginPath();
+                ctx.moveTo(x, y - size/2);
+                ctx.lineTo(x + size/2, y + size);
+                ctx.lineTo(x - size/2, y + size);
+                ctx.closePath();
+                ctx.fill();
+                
+                // Carrot top
+                ctx.fillStyle = '#66BB6A';
+                for (let i = -1; i <= 1; i++) {
+                    ctx.beginPath();
+                    ctx.moveTo(x + i * 1.5, y - size/2);
+                    ctx.lineTo(x + i * 4, y - size);
+                    ctx.lineTo(x + i * 3, y - size/2);
+                    ctx.closePath();
+                    ctx.fill();
+                }
+            }
+            
+            // Main draw function
+            function draw() {
+                // Clear canvas
+                ctx.clearRect(0, 0, width, height);
+                
+                // Fill background
+                ctx.fillStyle = config.backgroundColor;
+                ctx.beginPath();
+                ctx.rect(0, 0, width, height);
+                ctx.fill();
+                
+                // Draw plate
+                drawPlate();
+                
+                // Draw food items
+                drawFoodItems();
+                
+                // Animate
+                if (config.animate) {
+                    config.rotation += config.animationSpeed;
+                    requestAnimationFrame(draw);
+                }
+            }
+            
+            // Initialize
+            draw();
+        });
+    </script>
+</body>
+</html> class="feature-card">
                     <div class="feature-icon">
                         <i class="fas fa-utensils"></i>
                     </div>
