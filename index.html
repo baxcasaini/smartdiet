@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartDiet | Il tuo assistente nutrizionale su Telegram</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4CAF50;
+            --primary-dark: #388E3C;
+            --secondary: #FFC107;
+            --dark: #333;
+            --light: #f8f9fa;
+            --text: #212529;
+            --gray: #6c757d;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background-color: var(--light);
+        }
+
+        header {
+            background: linear-gradient(to right, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 2rem;
+            padding: 2rem 0;
+        }
+
+        .hero-content {
+            text-align: center;
+            max-width: 800px;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        h2 {
+            font-size: 2.2rem;
+            margin: 2rem 0 1rem;
+            color: var(--primary-dark);
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            margin: 1.5rem 0 0.5rem;
+            color: var(--dark);
+        }
+
+        p {
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--secondary);
+            color: var(--dark);
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            margin: 1rem 0.5rem;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: #FFD54F;
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+        }
+
+        section {
+            padding: 4rem 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            text-align: center;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .diet-types {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .diet-type {
+            background-color: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            counter-reset: step-counter;
+        }
+
+        .step {
+            position: relative;
+            background-color: white;
+            border-radius: 10px;
+            padding: 2rem;
+            padding-left: 3.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .step::before {
+            counter-increment: step-counter;
+            content: counter(step-counter);
+            position: absolute;
+            left: -15px;
+            top: -15px;
+            background-color: var(--primary);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .roadmap {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .roadmap-item {
+            display: flex;
+            margin-bottom: 2rem;
+        }
+
+        .roadmap-content {
+            background-color: white;
+            border-left: 4px solid var(--primary);
+            padding: 1.5rem;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            flex: 1;
+        }
+
+        .cta {
+            text-align: center;
+            background-color: var(--dark);
+            color: white;
+            padding: 5rem 0;
+            margin-top: 3rem;
+        }
+
+        .cta h2 {
+            color: white;
+        }
+
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+        }
+
+        .screenshot {
+            max-width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .tech-badge {
+            background-color: white;
+            color: var(--dark);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-weight: bold;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            h2 {
+                font-size: 1.8rem;
+            }
+
+            .hero {
+                flex-direction: column;
+            }
+
+            .features, .steps {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>🍽️ SmartDiet</h1>
+            <p>Il tuo assistente nutrizionale intelligente su Telegram</p>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h2>Diete personalizzate automaticamente con l'intelligenza artificiale</h2>
+                <p>Un bot Telegram completo che crea diete personalizzate in base alle tue preferenze, obiettivi e necessità. Genera automaticamente liste della spesa e si integra con Google Calendar per tenere traccia dei tuoi pasti.</p>
+                <a href="https://t.me/smartdiet_bot" class="btn btn-primary">Inizia ora su Telegram</a>
+                <a href="#features" class="btn">Scopri di più</a>
+            </div>
+            <img src="https://drive.google.com/uc?export=download&id=19eTh7WQj4ZgymjQOz-JFtQg0V-9gNGSW" alt="Screenshot del Bot Dieta Personalizzata in azione" class="screenshot" onerror="this.src='/api/placeholder/800/500'; this.alt='Screenshot del Bot (immagine non disponibile)'">
+        </div>
+    </section>
+
+    <section id="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>Caratteristiche principali</h2>
+                <p>Tutto ciò di cui hai bisogno per una nutrizione personalizzata</p>
+            </div>
+
+            <div class="features">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-utensils"></i>
+                    </div>
+                    <h3>Diete personalizzate</h3>
+                    <p>Crea diete adatte al tuo stile di vita, alle tue preferenze alimentari e ai tuoi obiettivi di salute.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+                    <h3>Lista della spesa automatica</h3>
+                    <p>Ottieni una lista della spesa completa basata sulla tua dieta, con tutti gli ingredienti necessari per preparare i pasti.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                    <h3>Integrazione con Google Calendar</h3>
+                    <p>Sincronizza i tuoi pasti con Google Calendar per avere sempre a portata di mano il tuo piano nutrizionale.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-weight"></i>
+                    </div>
+                    <h3>Monitoraggio del peso</h3>
+                    <p>Tieni traccia del tuo peso e delle tue metriche di salute nel tempo per vedere i tuoi progressi.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-save"></i>
+                    </div>
+                    <h3>Gestione delle diete</h3>
+                    <p>Salva le tue diete preferite per riutilizzarle in futuro, modificarle o condividerle.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Statistiche e analisi</h3>
+                    <p>Visualizza statistiche dettagliate sui tuoi progressi e sulla tua alimentazione per capire cosa funziona meglio per te.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="diet-types" style="background-color: #f1f8e9;">
+        <div class="container">
+            <div class="section-title">
+                <h2>Tipi di diete supportate</h2>
+                <p>Il bot supporta una vasta gamma di stili alimentari per soddisfare qualsiasi esigenza</p>
+            </div>
+
+            <div class="diet-types">
+                <div class="diet-type">
+                    <h3>Standard</h3>
+                    <p>Una dieta equilibrata con un'adeguata distribuzione di macronutrienti per un'alimentazione bilanciata.</p>
+                </div>
+
+                <div class="diet-type">
+                    <h3>Vegetariana</h3>
+                    <p>Esclude carne e pesce, ma include latticini e uova per chi segue uno stile di vita vegetariano.</p>
+                </div>
+
+                <div class="diet-type">
+                    <h3>Vegana</h3>
+                    <p>Completamente plant-based, esclude tutti i prodotti di origine animale mentre garantisce l'apporto proteico necessario.</p>
+                </div>
+
+                <div class="diet-type">
+                    <h3>Chetogenica</h3>
+                    <p>Alta in grassi e bassa in carboidrati, perfetta per chi vuole entrare in uno stato di chetosi metabolica.</p>
+                </div>
+
+                <div class="diet-type">
+                    <h3>Paleolitica</h3>
+                    <p>Basata su alimenti che i nostri antenati cacciatori-raccoglitori avrebbero consumato, eliminando cibi processati.</p>
+                </div>
+
+                <div class="diet-type">
+                    <h3>Low-carb</h3>
+                    <p>Riduce l'apporto di carboidrati per favorire il dimagrimento o per esigenze metaboliche specifiche.</p>
+                </div>
+
+                <div class="diet-type">
+                    <h3>Mediterranea</h3>
+                    <p>Ricca di olio d'oliva, pesce, verdure e cereali integrali, seguendo i principi della tradizionale dieta mediterranea.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="how-it-works">
+        <div class="container">
+            <div class="section-title">
+                <h2>Come funziona</h2>
+                <p>Pochi semplici passi per ottenere la tua dieta personalizzata</p>
+            </div>
+
+            <div class="steps">
+                <div class="step">
+                    <h3>Inserisci i tuoi dati</h3>
+                    <p>Fornisci informazioni di base come peso, altezza, età, livello di attività fisica e obiettivi.</p>
+                </div>
+
+                <div class="step">
+                    <h3>Personalizza le preferenze</h3>
+                    <p>Specifica i tuoi gusti, intolleranze, allergie e qualsiasi esigenza dietetica particolare.</p>
+                </div>
+
+                <div class="step">
+                    <h3>Scegli il tipo di dieta</h3>
+                    <p>Seleziona tra la dieta standard, vegetariana, vegana, chetogenica, paleolitica, low-carb o mediterranea.</p>
+                </div>
+
+                <div class="step">
+                    <h3>Ricevi la tua dieta</h3>
+                    <p>L'intelligenza artificiale genera un piano alimentare personalizzato basato sui tuoi dati e preferenze.</p>
+                </div>
+
+                <div class="step">
+                    <h3>Ottieni la lista della spesa</h3>
+                    <p>Ricevi automaticamente una lista degli ingredienti necessari per preparare tutti i pasti della tua dieta.</p>
+                </div>
+
+                <div class="step">
+                    <h3>Sincronizza con Google Calendar</h3>
+                    <p>Aggiungi i tuoi pasti a Google Calendar con un semplice clic per tenere traccia del tuo piano alimentare.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="tech" style="background-color: #e8f5e9;">
+        <div class="container">
+            <div class="section-title">
+                <h2>Tecnologie utilizzate</h2>
+                <p>Costruito con strumenti moderni per la massima efficienza</p>
+            </div>
+
+            <div class="tech-stack">
+                <span class="tech-badge">Python</span>
+                <span class="tech-badge">OpenAI API</span>
+                <span class="tech-badge">Google Calendar API</span>
+                <span class="tech-badge">Telegram Bot API</span>
+                <span class="tech-badge">SQLite</span>
+                <span class="tech-badge">Docker</span>
+                <span class="tech-badge">python-telegram-bot</span>
+                <span class="tech-badge">Nest Asyncio</span>
+                <span class="tech-badge">python-dotenv</span>
+                <span class="tech-badge">Google OAuth</span>
+            </div>
+
+            <p style="text-align: center;">Il bot utilizza modelli di intelligenza artificiale avanzati di OpenAI come GPT-4o-mini, O1-mini e O3-mini per generare diete personalizzate e liste della spesa ottimizzate in base ai tuoi dati e preferenze.</p>
+        </div>
+    </section>
+
+    <section id="roadmap">
+        <div class="container">
+            <div class="section-title">
+                <h2>Roadmap e sviluppi futuri</h2>
+                <p>Le prossime funzionalità che verranno implementate</p>
+            </div>
+
+            <div class="roadmap">
+                <div class="roadmap-item">
+                    <div class="roadmap-content">
+                        <h3>App mobile nativa</h3>
+                        <p>Sviluppo di applicazioni native per iOS e Android per un'esperienza utente ancora più fluida e completa.</p>
+                    </div>
+                </div>
+
+                <div class="roadmap-item">
+                    <div class="roadmap-content">
+                        <h3>Espansione dei tipi di dieta</h3>
+                        <p>Aggiunta di nuovi tipi di dieta come DASH, FODMAP, anti-infiammatoria e altre diete specializzate.</p>
+                    </div>
+                </div>
+
+                <div class="roadmap-item">
+                    <div class="roadmap-content">
+                        <h3>Integrazione con dispositivi fitness</h3>
+                        <p>Collegamento con smartwatch e fitness tracker per adattare automaticamente la dieta al tuo livello di attività quotidiana.</p>
+                    </div>
+                </div>
+
+                <div class="roadmap-item">
+                    <div class="roadmap-content">
+                        <h3>Ricette interattive</h3>
+                        <p>Aggiunta di istruzioni dettagliate passo-passo per la preparazione dei pasti, con opzioni video e immagini.</p>
+                    </div>
+                </div>
+
+                <div class="roadmap-item">
+                    <div class="roadmap-content">
+                        <h3>Integrazione con servizi di consegna spesa</h3>
+                        <p>Possibilità di ordinare direttamente gli ingredienti necessari attraverso servizi di consegna della spesa.</p>
+                    </div>
+                </div>
+
+                <div class="roadmap-item">
+                    <div class="roadmap-content">
+                        <h3>Supporto per consulenze nutrizionali</h3>
+                        <p>Integrazione con nutrizionisti professionisti per consulenze personalizzate e adattamento della dieta.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta">
+        <div class="container">
+            <h2>Pronto a migliorare la tua alimentazione?</h2>
+            <p>Inizia oggi il tuo percorso verso uno stile di vita più sano con il nostro Bot Dieta Personalizzata.</p>
+            <a href="https://t.me/smartdiet_bot" class="btn">Avvia il bot su Telegram</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 SmartDiet. Tutti i diritti riservati.</p>
+            <p>Sviluppato con ❤️ per aiutarti a raggiungere i tuoi obiettivi nutrizionali.</p>
+        </div>
+    </footer>
+</body>
+</html>
