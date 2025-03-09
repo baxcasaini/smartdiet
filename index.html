@@ -1,18 +1,4 @@
-.logo-container {
-            margin-bottom: 1rem;
-        }
-        
-        .logo {
-            width: 100px;
-            height: auto;
-            border-radius: 50%;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }        .feature-card img {
-            max-width: 100%;
-            height: auto;
-            margin: 0 auto;
-            display: block;
-        }<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="it">
 <head>
     <meta charset="UTF-8">
@@ -59,6 +45,17 @@
             margin: 0 auto;
             padding: 0 1rem;
             text-align: center;
+        }
+        
+        .logo-container {
+            margin-bottom: 1rem;
+        }
+        
+        .logo {
+            width: 100px;
+            height: auto;
+            border-radius: 50%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
         
         .hero {
@@ -164,7 +161,14 @@
             margin-bottom: 1rem;
         }
         
-        .diet-types {
+        .feature-card img {
+            max-width: 100%;
+            height: auto;
+            margin: 0 auto;
+            display: block;
+        }
+        
+        .diet-guide {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 1.5rem;
@@ -275,6 +279,45 @@
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
         
+        .language-selector {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .language-btn {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            padding: 0.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .language-btn:hover, .language-btn.active {
+            background-color: rgba(255, 255, 255, 0.4);
+        }
+        
+        [lang="en"] {
+            display: none;
+        }
+        
+        .lang-en [lang="it"] {
+            display: none;
+        }
+        
+        .lang-en [lang="en"] {
+            display: block;
+        }
+        
+        .lang-en span[lang="en"], .lang-en a[lang="en"], .lang-en h1[lang="en"], .lang-en h2[lang="en"], .lang-en h3[lang="en"], .lang-en p[lang="en"] {
+            display: inline;
+        }
+        
         @media (max-width: 768px) {
             h1 {
                 font-size: 2.5rem;
@@ -291,27 +334,104 @@
             .features, .steps {
                 grid-template-columns: 1fr;
             }
+            
+            .language-selector {
+                position: static;
+                justify-content: center;
+                margin-bottom: 1rem;
+            }
         }
     </style>
 </head>
 <body>
     <header>
+        <div class="language-selector">
+            <button class="language-btn active" data-lang="it">🇮🇹 IT</button>
+            <button class="language-btn" data-lang="en">🇬🇧 EN</button>
+        </div>
         <div class="container">
             <div class="logo-container">
                 <img src="/api/placeholder/100/100" alt="Logo SmartDiet" class="logo">
             </div>
-            <h1>🍽️ SmartDiet</h1>
-            <p>Il tuo assistente nutrizionale intelligente su Telegram</p>
+        </div>
+    </section>
+    
+    <section class="cta">
+        <div class="container">
+            <h2 lang="it">Pronto a migliorare la tua alimentazione?</h2>
+            <h2 lang="en">Ready to improve your diet?</h2>
+            <p lang="it">Inizia oggi il tuo percorso verso uno stile di vita più sano con SmartDiet.</p>
+            <p lang="en">Start your journey toward a healthier lifestyle with SmartDiet today.</p>
+            <a href="https://t.me/smartdiet_bot" class="btn" lang="it">Avvia il bot su Telegram</a>
+            <a href="https://t.me/smartdiet_bot" class="btn" lang="en">Start the bot on Telegram</a>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="container">
+            <p lang="it">&copy; 2025 SmartDiet. Tutti i diritti riservati.</p>
+            <p lang="en">&copy; 2025 SmartDiet. All rights reserved.</p>
+            <p lang="it">Sviluppato con ❤️ per aiutarti a raggiungere i tuoi obiettivi nutrizionali.</p>
+            <p lang="en">Developed with ❤️ to help you achieve your nutritional goals.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Language switcher functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const langButtons = document.querySelectorAll('.language-btn');
+            
+            langButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const lang = this.getAttribute('data-lang');
+                    
+                    // Remove active class from all buttons
+                    langButtons.forEach(btn => btn.classList.remove('active'));
+                    
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                    
+                    // Set the language class on the body
+                    document.body.className = '';
+                    document.body.classList.add('lang-' + lang);
+                    
+                    // Store the language preference in localStorage
+                    localStorage.setItem('preferred-language', lang);
+                });
+            });
+            
+            // Check if there's a stored language preference
+            const storedLang = localStorage.getItem('preferred-language');
+            if (storedLang) {
+                // Find the button for the stored language
+                const storedLangButton = document.querySelector(`.language-btn[data-lang="${storedLang}"]`);
+                if (storedLangButton) {
+                    // Trigger a click on that button
+                    storedLangButton.click();
+                }
+            }
+        });
+    </script>
+</body>
+</html>
+    <h1 lang="it">🍽️ SmartDiet</h1>
+            <h1 lang="en">🍽️ SmartDiet</h1>
+            <p lang="it">Il tuo assistente nutrizionale intelligente su Telegram</p>
+            <p lang="en">Your intelligent nutritional assistant on Telegram</p>
         </div>
     </header>
     
     <section class="hero">
         <div class="container">
             <div class="hero-content">
-                <h2>Diete personalizzate automaticamente con l'intelligenza artificiale</h2>
-                <p>Un bot Telegram completo che crea diete personalizzate in base alle tue preferenze, obiettivi e necessità. Genera automaticamente liste della spesa e si integra con Google Calendar per tenere traccia dei tuoi pasti.</p>
-                <a href="https://t.me/smartdiet_bot" class="btn btn-primary">Inizia ora su Telegram</a>
-                <a href="#features" class="btn">Scopri di più</a>
+                <h2 lang="it">Diete personalizzate automaticamente con l'intelligenza artificiale</h2>
+                <h2 lang="en">Automatically personalized diets with artificial intelligence</h2>
+                <p lang="it">Un bot Telegram completo che crea diete personalizzate in base alle tue preferenze, obiettivi e necessità. Genera automaticamente liste della spesa e si integra con Google Calendar per tenere traccia dei tuoi pasti.</p>
+                <p lang="en">A complete Telegram bot that creates personalized diets based on your preferences, goals, and needs. It automatically generates shopping lists and integrates with Google Calendar to keep track of your meals.</p>
+                <a href="https://t.me/smartdiet_bot" class="btn btn-primary" lang="it">Inizia ora su Telegram</a>
+                <a href="https://t.me/smartdiet_bot" class="btn btn-primary" lang="en">Start now on Telegram</a>
+                <a href="#features" class="btn" lang="it">Scopri di più</a>
+                <a href="#features" class="btn" lang="en">Learn more</a>
             </div>
             <img src="https://raw.githubusercontent.com/baxcasaini/smartdiet/main/show.png" alt="Screenshot del Bot SmartDiet in azione" class="screenshot" onerror="this.src='/api/placeholder/800/500'; this.alt='Screenshot del Bot (immagine non disponibile)'">
         </div>
@@ -320,8 +440,10 @@
     <section id="features">
         <div class="container">
             <div class="section-title">
-                <h2>Caratteristiche principali</h2>
-                <p>Tutto ciò di cui hai bisogno per una nutrizione personalizzata</p>
+                <h2 lang="it">Caratteristiche principali</h2>
+                <h2 lang="en">Main Features</h2>
+                <p lang="it">Tutto ciò di cui hai bisogno per una nutrizione personalizzata</p>
+                <p lang="en">Everything you need for personalized nutrition</p>
             </div>
             
             <div class="features">
@@ -329,48 +451,60 @@
                     <div class="feature-icon">
                         <i class="fas fa-utensils"></i>
                     </div>
-                    <h3>Diete personalizzate</h3>
-                    <p>Crea diete adatte al tuo stile di vita, alle tue preferenze alimentari e ai tuoi obiettivi di salute.</p>
+                    <h3 lang="it">Diete personalizzate</h3>
+                    <h3 lang="en">Personalized Diets</h3>
+                    <p lang="it">Crea diete adatte al tuo stile di vita, alle tue preferenze alimentari e ai tuoi obiettivi di salute.</p>
+                    <p lang="en">Create diets that suit your lifestyle, food preferences, and health goals.</p>
                 </div>
                 
                 <div class="feature-card">
                     <div class="feature-icon">
                         <i class="fas fa-shopping-cart"></i>
                     </div>
-                    <h3>Lista della spesa automatica</h3>
-                    <p>Ottieni una lista della spesa completa basata sulla tua dieta, con tutti gli ingredienti necessari per preparare i pasti.</p>
+                    <h3 lang="it">Lista della spesa automatica</h3>
+                    <h3 lang="en">Automatic Shopping List</h3>
+                    <p lang="it">Ottieni una lista della spesa completa basata sulla tua dieta, con tutti gli ingredienti necessari per preparare i pasti.</p>
+                    <p lang="en">Get a complete shopping list based on your diet, with all the ingredients needed to prepare meals.</p>
                 </div>
                 
                 <div class="feature-card">
                     <div class="feature-icon">
                         <i class="fas fa-calendar-alt"></i>
                     </div>
-                    <h3>Integrazione con Google Calendar</h3>
-                    <p>Sincronizza i tuoi pasti con Google Calendar per avere sempre a portata di mano il tuo piano nutrizionale.</p>
+                    <h3 lang="it">Integrazione con Google Calendar</h3>
+                    <h3 lang="en">Google Calendar Integration</h3>
+                    <p lang="it">Sincronizza i tuoi pasti con Google Calendar per avere sempre a portata di mano il tuo piano nutrizionale.</p>
+                    <p lang="en">Sync your meals with Google Calendar to always have your nutritional plan at hand.</p>
                 </div>
                 
                 <div class="feature-card">
                     <div class="feature-icon">
                         <i class="fas fa-weight"></i>
                     </div>
-                    <h3>Monitoraggio del peso</h3>
-                    <p>Tieni traccia del tuo peso e delle tue metriche di salute nel tempo per vedere i tuoi progressi.</p>
+                    <h3 lang="it">Monitoraggio del peso</h3>
+                    <h3 lang="en">Weight Monitoring</h3>
+                    <p lang="it">Tieni traccia del tuo peso e delle tue metriche di salute nel tempo per vedere i tuoi progressi.</p>
+                    <p lang="en">Track your weight and health metrics over time to see your progress.</p>
                 </div>
                 
                 <div class="feature-card">
                     <div class="feature-icon">
                         <i class="fas fa-save"></i>
                     </div>
-                    <h3>Gestione delle diete</h3>
-                    <p>Salva le tue diete preferite per riutilizzarle in futuro, modificarle o condividerle.</p>
+                    <h3 lang="it">Gestione delle diete</h3>
+                    <h3 lang="en">Diet Management</h3>
+                    <p lang="it">Salva le tue diete preferite per riutilizzarle in futuro, modificarle o condividerle.</p>
+                    <p lang="en">Save your favorite diets to reuse them in the future, modify them, or share them.</p>
                 </div>
                 
                 <div class="feature-card">
                     <div class="feature-icon">
                         <i class="fas fa-chart-line"></i>
                     </div>
-                    <h3>Statistiche e analisi</h3>
-                    <p>Visualizza statistiche dettagliate sui tuoi progressi e sulla tua alimentazione per capire cosa funziona meglio per te.</p>
+                    <h3 lang="it">Statistiche e analisi</h3>
+                    <h3 lang="en">Statistics and Analysis</h3>
+                    <p lang="it">Visualizza statistiche dettagliate sui tuoi progressi e sulla tua alimentazione per capire cosa funziona meglio per te.</p>
+                    <p lang="en">View detailed statistics on your progress and nutrition to understand what works best for you.</p>
                 </div>
             </div>
         </div>
@@ -379,44 +513,63 @@
     <section id="diet-types" style="background-color: #f1f8e9;">
         <div class="container">
             <div class="section-title">
-                <h2>Tipi di diete supportate</h2>
-                <p>Il bot supporta una vasta gamma di stili alimentari per soddisfare qualsiasi esigenza</p>
+                <h2 lang="it">Suggerimenti dietetici personalizzabili</h2>
+                <h2 lang="en">Customizable Dietary Suggestions</h2>
+                <p lang="it">SmartDiet può creare qualsiasi tipo di dieta in base alle tue esigenze specifiche</p>
+                <p lang="en">SmartDiet can create any type of diet based on your specific needs</p>
             </div>
             
-            <div class="diet-types">
+            <div lang="it">
+                <p>SmartDiet è in grado di creare una dieta completamente personalizzata in base alle tue esigenze specifiche, alle tue abitudini alimentari e ai tuoi obiettivi di salute. Non ci sono limiti ai tipi di diete che può generare.</p>
+                <p>Oltre alle diete completamente personalizzate, SmartDiet può anche seguire modelli dietetici standard come punto di partenza. Ecco alcuni esempi:</p>
+            </div>
+            
+            <div lang="en">
+                <p>SmartDiet can create a completely personalized diet based on your specific needs, eating habits, and health goals. There are no limits to the types of diets it can generate.</p>
+                <p>In addition to fully customized diets, SmartDiet can also follow standard dietary models as a starting point. Here are some examples:</p>
+            </div>
+            
+            <div class="diet-guide">
                 <div class="diet-type">
-                    <h3>Standard</h3>
-                    <p>Una dieta equilibrata con un'adeguata distribuzione di macronutrienti per un'alimentazione bilanciata.</p>
+                    <h3 lang="it">Standard</h3>
+                    <h3 lang="en">Standard</h3>
+                    <p lang="it">Una dieta equilibrata con un'adeguata distribuzione di macronutrienti per un'alimentazione bilanciata.</p>
+                    <p lang="en">A balanced diet with an adequate distribution of macronutrients for balanced nutrition.</p>
                 </div>
                 
                 <div class="diet-type">
-                    <h3>Vegetariana</h3>
-                    <p>Esclude carne e pesce, ma include latticini e uova per chi segue uno stile di vita vegetariano.</p>
+                    <h3 lang="it">Vegetariana</h3>
+                    <h3 lang="en">Vegetarian</h3>
+                    <p lang="it">Esclude carne e pesce, ma include latticini e uova per chi segue uno stile di vita vegetariano.</p>
+                    <p lang="en">Excludes meat and fish, but includes dairy and eggs for those following a vegetarian lifestyle.</p>
                 </div>
                 
                 <div class="diet-type">
-                    <h3>Vegana</h3>
-                    <p>Completamente plant-based, esclude tutti i prodotti di origine animale mentre garantisce l'apporto proteico necessario.</p>
+                    <h3 lang="it">Vegana</h3>
+                    <h3 lang="en">Vegan</h3>
+                    <p lang="it">Completamente plant-based, esclude tutti i prodotti di origine animale mentre garantisce l'apporto proteico necessario.</p>
+                    <p lang="en">Completely plant-based, excludes all animal products while ensuring the necessary protein intake.</p>
                 </div>
                 
                 <div class="diet-type">
-                    <h3>Chetogenica</h3>
-                    <p>Alta in grassi e bassa in carboidrati, perfetta per chi vuole entrare in uno stato di chetosi metabolica.</p>
+                    <h3 lang="it">Chetogenica</h3>
+                    <h3 lang="en">Ketogenic</h3>
+                    <p lang="it">Alta in grassi e bassa in carboidrati, perfetta per chi vuole entrare in uno stato di chetosi metabolica.</p>
+                    <p lang="en">High in fat and low in carbohydrates, perfect for those who want to enter a state of metabolic ketosis.</p>
                 </div>
                 
                 <div class="diet-type">
-                    <h3>Paleolitica</h3>
-                    <p>Basata su alimenti che i nostri antenati cacciatori-raccoglitori avrebbero consumato, eliminando cibi processati.</p>
+                    <h3 lang="it">Mediterranea</h3>
+                    <h3 lang="en">Mediterranean</h3>
+                    <p lang="it">Ricca di olio d'oliva, pesce, verdure e cereali integrali, seguendo i principi della tradizionale dieta mediterranea.</p>
+                    <p lang="en">Rich in olive oil, fish, vegetables, and whole grains, following the principles of the traditional Mediterranean diet.</p>
                 </div>
                 
                 <div class="diet-type">
-                    <h3>Low-carb</h3>
-                    <p>Riduce l'apporto di carboidrati per favorire il dimagrimento o per esigenze metaboliche specifiche.</p>
-                </div>
-                
-                <div class="diet-type">
-                    <h3>Mediterranea</h3>
-                    <p>Ricca di olio d'oliva, pesce, verdure e cereali integrali, seguendo i principi della tradizionale dieta mediterranea.</p>
+                    <h3 lang="it">E molto altro</h3>
+                    <h3 lang="en">And much more</h3>
+                    <p lang="it">Qualunque siano le tue esigenze specifiche, SmartDiet può adattarsi e creare un piano alimentare su misura per te.</p>
+                    <p lang="en">Whatever your specific needs are, SmartDiet can adapt and create a customized meal plan for you.</p>
                 </div>
             </div>
         </div>
@@ -425,39 +578,53 @@
     <section id="how-it-works">
         <div class="container">
             <div class="section-title">
-                <h2>Come funziona</h2>
-                <p>Pochi semplici passi per ottenere la tua dieta personalizzata</p>
+                <h2 lang="it">Come funziona</h2>
+                <h2 lang="en">How it works</h2>
+                <p lang="it">Pochi semplici passi per ottenere la tua dieta personalizzata</p>
+                <p lang="en">A few simple steps to get your personalized diet</p>
             </div>
             
             <div class="steps">
                 <div class="step">
-                    <h3>Inserisci i tuoi dati</h3>
-                    <p>Fornisci informazioni di base come peso, altezza, età, livello di attività fisica e obiettivi.</p>
+                    <h3 lang="it">Inserisci i tuoi dati</h3>
+                    <h3 lang="en">Enter your data</h3>
+                    <p lang="it">Fornisci informazioni di base come peso, altezza, età, livello di attività fisica e obiettivi.</p>
+                    <p lang="en">Provide basic information such as weight, height, age, physical activity level, and goals.</p>
                 </div>
                 
                 <div class="step">
-                    <h3>Personalizza le preferenze</h3>
-                    <p>Specifica i tuoi gusti, intolleranze, allergie e qualsiasi esigenza dietetica particolare.</p>
+                    <h3 lang="it">Personalizza le preferenze</h3>
+                    <h3 lang="en">Customize preferences</h3>
+                    <p lang="it">Specifica i tuoi gusti, intolleranze, allergie e qualsiasi esigenza dietetica particolare.</p>
+                    <p lang="en">Specify your tastes, intolerances, allergies, and any special dietary requirements.</p>
                 </div>
                 
                 <div class="step">
-                    <h3>Scegli il tipo di dieta</h3>
-                    <p>Seleziona tra la dieta standard, vegetariana, vegana, chetogenica, paleolitica, low-carb o mediterranea.</p>
+                    <h3 lang="it">Scegli il livello di abilità in cucina</h3>
+                    <h3 lang="en">Choose your cooking skill level</h3>
+                    <p lang="it">Indica il tuo livello di esperienza in cucina per ricevere ricette adatte alle tue capacità culinarie.</p>
+                    <p lang="en">Indicate your level of experience in the kitchen to receive recipes suitable for your culinary skills.</p>
                 </div>
                 
                 <div class="step">
-                    <h3>Ricevi la tua dieta</h3>
-                    <p>L'intelligenza artificiale genera un piano alimentare personalizzato basato sui tuoi dati e preferenze.</p>
+                    <h3 lang="it">Ricevi la tua dieta</h3>
+                    <h3 lang="en">Receive your diet</h3>
+                    <p lang="it">L'intelligenza artificiale genera un piano alimentare personalizzato basato sui tuoi dati e preferenze.</p>
+                    <p lang="en">Artificial intelligence generates a personalized meal plan based on your data and preferences.</p>
                 </div>
                 
                 <div class="step">
-                    <h3>Ottieni la lista della spesa</h3>
-                    <p>Ricevi automaticamente una lista degli ingredienti necessari per preparare tutti i pasti della tua dieta.</p>
+                    <h3 lang="it">Ottieni la lista della spesa</h3>
+                    <h3 lang="en">Get the shopping list</h3>
+                    <p lang="it">Ricevi automaticamente una lista degli ingredienti necessari per preparare tutti i pasti della tua dieta.</p>
+                    <p lang="en">Automatically receive a list of ingredients needed to prepare all the meals in your diet.</p>
                 </div>
                 
                 <div class="step">
-                    <h3>Sincronizza con Google Calendar</h3>
-                    <p>Aggiungi i tuoi pasti a Google Calendar con un semplice clic per tenere traccia del tuo piano alimentare.</p>
+                    <h3 lang="it">Sincronizza con Google Calendar</h3>
+                    <h3 lang="en">Sync with Google Calendar</h3>
+                    <p lang="it">Aggiungi i tuoi pasti a Google Calendar con un semplice clic per tenere traccia del tuo piano alimentare.</p>
+                    <p lang="en">Add your meals to Google Calendar with a simple click to keep track of your meal plan.</p>
                 </div>
             </div>
         </div>
@@ -466,8 +633,10 @@
     <section id="tech" style="background-color: #e8f5e9;">
         <div class="container">
             <div class="section-title">
-                <h2>Tecnologie utilizzate</h2>
-                <p>Costruito con strumenti moderni per la massima efficienza</p>
+                <h2 lang="it">Tecnologie utilizzate</h2>
+                <h2 lang="en">Technologies used</h2>
+                <p lang="it">Costruito con strumenti moderni per la massima efficienza</p>
+                <p lang="en">Built with modern tools for maximum efficiency</p>
             </div>
             
             <div class="tech-stack">
@@ -483,76 +652,72 @@
                 <span class="tech-badge">Google OAuth</span>
             </div>
             
-            <p style="text-align: center;">Il bot utilizza modelli di intelligenza artificiale avanzati di OpenAI come GPT-4o-mini, O1-mini e O3-mini per generare diete personalizzate e liste della spesa ottimizzate in base ai tuoi dati e preferenze.</p>
+            <p style="text-align: center;" lang="it">Il bot utilizza modelli di intelligenza artificiale avanzati di OpenAI come GPT-4o-mini, O1-mini e O3-mini per generare diete personalizzate e liste della spesa ottimizzate in base ai tuoi dati e preferenze.</p>
+            <p style="text-align: center;" lang="en">The bot uses advanced artificial intelligence models from OpenAI such as GPT-4o-mini, O1-mini, and O3-mini to generate personalized diets and optimized shopping lists based on your data and preferences.</p>
         </div>
     </section>
     
     <section id="roadmap">
         <div class="container">
             <div class="section-title">
-                <h2>Roadmap e sviluppi futuri</h2>
-                <p>Le prossime funzionalità che verranno implementate</p>
+                <h2 lang="it">Roadmap e sviluppi futuri</h2>
+                <h2 lang="en">Roadmap and future developments</h2>
+                <p lang="it">Le prossime funzionalità che verranno implementate</p>
+                <p lang="en">The next features to be implemented</p>
             </div>
             
             <div class="roadmap">
                 <div class="roadmap-item">
                     <div class="roadmap-content">
-                        <h3>App mobile nativa</h3>
-                        <p>Sviluppo di applicazioni native per iOS e Android per un'esperienza utente ancora più fluida e completa.</p>
+                        <h3 lang="it">Analisi dei pasti consumati</h3>
+                        <h3 lang="en">Analysis of consumed meals</h3>
+                        <p lang="it">Possibilità di inviare foto o informazioni sui pasti consumati per ricevere feedback e ricalcolare la dieta in base a ciò che si è effettivamente mangiato.</p>
+                        <p lang="en">Ability to send photos or information about consumed meals to receive feedback and recalculate the diet based on what you actually ate.</p>
                     </div>
                 </div>
                 
                 <div class="roadmap-item">
                     <div class="roadmap-content">
-                        <h3>Espansione dei tipi di dieta</h3>
-                        <p>Aggiunta di nuovi tipi di dieta come DASH, FODMAP, anti-infiammatoria e altre diete specializzate.</p>
+                        <h3 lang="it">Verifica della spesa effettuata</h3>
+                        <h3 lang="en">Verification of purchases made</h3>
+                        <p lang="it">Funzionalità per caricare una foto dello scontrino, confrontare gli acquisti con la lista della spesa consigliata e adattare la dieta agli ingredienti effettivamente disponibili.</p>
+                        <p lang="en">Feature to upload a photo of the receipt, compare purchases with the recommended shopping list, and adapt the diet to the ingredients actually available.</p>
                     </div>
                 </div>
                 
                 <div class="roadmap-item">
                     <div class="roadmap-content">
-                        <h3>Integrazione con dispositivi fitness</h3>
-                        <p>Collegamento con smartwatch e fitness tracker per adattare automaticamente la dieta al tuo livello di attività quotidiana.</p>
+                        <h3 lang="it">App mobile nativa</h3>
+                        <h3 lang="en">Native mobile app</h3>
+                        <p lang="it">Sviluppo di applicazioni native per iOS e Android per un'esperienza utente ancora più fluida e completa.</p>
+                        <p lang="en">Development of native applications for iOS and Android for an even smoother and more complete user experience.</p>
                     </div>
                 </div>
                 
                 <div class="roadmap-item">
                     <div class="roadmap-content">
-                        <h3>Ricette interattive</h3>
-                        <p>Aggiunta di istruzioni dettagliate passo-passo per la preparazione dei pasti, con opzioni video e immagini.</p>
+                        <h3 lang="it">Integrazione con dispositivi fitness</h3>
+                        <h3 lang="en">Integration with fitness devices</h3>
+                        <p lang="it">Collegamento con smartwatch e fitness tracker per adattare automaticamente la dieta al tuo livello di attività quotidiana.</p>
+                        <p lang="en">Connection with smartwatches and fitness trackers to automatically adapt the diet to your daily activity level.</p>
                     </div>
                 </div>
                 
                 <div class="roadmap-item">
                     <div class="roadmap-content">
-                        <h3>Integrazione con servizi di consegna spesa</h3>
-                        <p>Possibilità di ordinare direttamente gli ingredienti necessari attraverso servizi di consegna della spesa.</p>
+                        <h3 lang="it">Ricette interattive</h3>
+                        <h3 lang="en">Interactive recipes</h3>
+                        <p lang="it">Aggiunta di istruzioni dettagliate passo-passo per la preparazione dei pasti, con opzioni video e immagini.</p>
+                        <p lang="en">Addition of detailed step-by-step instructions for meal preparation, with video and image options.</p>
                     </div>
                 </div>
                 
                 <div class="roadmap-item">
                     <div class="roadmap-content">
-                        <h3>Supporto per consulenze nutrizionali</h3>
-                        <p>Integrazione con nutrizionisti professionisti per consulenze personalizzate e adattamento della dieta.</p>
+                        <h3 lang="it">Integrazione con servizi di consegna spesa</h3>
+                        <h3 lang="en">Integration with grocery delivery services</h3>
+                        <p lang="it">Possibilità di ordinare direttamente gli ingredienti necessari attraverso servizi di consegna della spesa.</p>
+                        <p lang="en">Possibility to directly order the necessary ingredients through grocery delivery services.</p>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
-    
-    <section class="cta">
-        <div class="container">
-            <h2>Pronto a migliorare la tua alimentazione?</h2>
-            <p>Inizia oggi il tuo percorso verso uno stile di vita più sano con il nostro Bot Dieta Personalizzata.</p>
-            <a href="https://t.me/smartdiet_bot" class="btn">Avvia il bot su Telegram</a>
-        </div>
-    </section>
-    
-    <footer>
-        <div class="container">
-            <p>&copy; 2025 SmartDiet. Tutti i diritti riservati.</p>
-            <p>Sviluppato con ❤️ per aiutarti a raggiungere i tuoi obiettivi nutrizionali.</p>
-        </div>
-    </footer>
-</body>
-</html>
