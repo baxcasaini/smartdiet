@@ -375,7 +375,7 @@
         </div>
         <div class="container">
             <div class="logo-container">
-                <img src="/api/placeholder/100/100" alt="Logo SmartDiet" class="logo">
+                <canvas id="logoCanvas" width="100" height="100"></canvas>
             </div>
         </div>
     </section>
@@ -434,6 +434,195 @@
                     storedLangButton.click();
                 }
             }
+            
+            // Logo Canvas Logic
+            const canvas = document.getElementById('logoCanvas');
+            const ctx = canvas.getContext('2d');
+            const width = canvas.width;
+            const height = canvas.height;
+            const centerX = width / 2;
+            const centerY = height / 2;
+            
+            // Logo configuration
+            const config = {
+                backgroundColor: '#4CAF50',
+                plateColor: '#FFFFFF',
+                foodItems: [
+                    { type: 'apple', color: '#FF5252', x: centerX - 12, y: centerY - 5, radius: 7 },
+                    { type: 'broccoli', color: '#66BB6A', x: centerX + 5, y: centerY - 2, size: 9 },
+                    { type: 'carrot', color: '#FF9800', x: centerX - 2, y: centerY + 7, size: 8 }
+                ],
+                plateRadius: 35,
+                plateInnerRadius: 30,
+                rotation: 0,
+                animate: true,
+                animationSpeed: 0.005
+            };
+            
+            // Draw the plate
+            function drawPlate() {
+                // Outer circle (plate)
+                ctx.fillStyle = config.plateColor;
+                ctx.beginPath();
+                ctx.arc(centerX, centerY, config.plateRadius, 0, Math.PI * 2);
+                ctx.fill();
+                
+                // Inner circle (plate inner)
+                ctx.fillStyle = config.backgroundColor;
+                ctx.beginPath();
+                ctx.arc(centerX, centerY, config.plateInnerRadius, 0, Math.PI * 2);
+                ctx.fill();
+                
+                // Fork and knife silhouettes
+                drawUtensils();
+            }
+            
+            // Draw fork and knife silhouettes
+            function drawUtensils() {
+                ctx.save();
+                ctx.translate(centerX, centerY);
+                ctx.rotate(config.rotation);
+                
+                // Draw fork
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
+                ctx.beginPath();
+                ctx.moveTo(-10, -20);
+                ctx.lineTo(-7, -20);
+                ctx.lineTo(-7, -5);
+                ctx.lineTo(-12, 0);
+                ctx.lineTo(-15, -2);
+                ctx.lineTo(-10, -7);
+                ctx.lineTo(-10, -20);
+                ctx.fill();
+                
+                // Draw knife
+                ctx.beginPath();
+                ctx.moveTo(7, -20);
+                ctx.lineTo(12, -20);
+                ctx.lineTo(15, -2);
+                ctx.lineTo(12, 0);
+                ctx.lineTo(10, -2);
+                ctx.lineTo(7, -20);
+                ctx.fill();
+                
+                ctx.restore();
+            }
+            
+            // Draw food items
+            function drawFoodItems() {
+                ctx.save();
+                ctx.translate(centerX, centerY);
+                ctx.rotate(config.rotation);
+                
+                config.foodItems.forEach(item => {
+                    const x = item.x - centerX;
+                    const y = item.y - centerY;
+                    
+                    switch(item.type) {
+                        case 'apple':
+                            drawApple(x, y, item.radius, item.color);
+                            break;
+                        case 'broccoli':
+                            drawBroccoli(x, y, item.size, item.color);
+                            break;
+                        case 'carrot':
+                            drawCarrot(x, y, item.size, item.color);
+                            break;
+                    }
+                });
+                
+                ctx.restore();
+            }
+            
+            // Draw an apple
+            function drawApple(x, y, radius, color) {
+                // Apple body
+                ctx.fillStyle = color;
+                ctx.beginPath();
+                ctx.arc(x, y, radius, 0, Math.PI * 2);
+                ctx.fill();
+                
+                // Apple stem
+                ctx.fillStyle = '#5D4037';
+                ctx.fillRect(x - 0.5, y - radius - 2, 1, 2);
+                
+                // Apple leaf
+                ctx.fillStyle = '#66BB6A';
+                ctx.beginPath();
+                ctx.ellipse(x + 1.5, y - radius - 1, 2, 1, Math.PI / 4, 0, Math.PI * 2);
+                ctx.fill();
+            }
+            
+            // Draw broccoli
+            function drawBroccoli(x, y, size, color) {
+                // Stem
+                ctx.fillStyle = '#8D6E63';
+                ctx.fillRect(x - 1, y, 2, size);
+                
+                // Florets
+                ctx.fillStyle = color;
+                ctx.beginPath();
+                ctx.arc(x, y - size/2, size/2, 0, Math.PI * 2);
+                ctx.fill();
+                
+                ctx.beginPath();
+                ctx.arc(x - size/3, y - size/3, size/3, 0, Math.PI * 2);
+                ctx.fill();
+                
+                ctx.beginPath();
+                ctx.arc(x + size/3, y - size/3, size/3, 0, Math.PI * 2);
+                ctx.fill();
+            }
+            
+            // Draw carrot
+            function drawCarrot(x, y, size, color) {
+                // Carrot body
+                ctx.fillStyle = color;
+                ctx.beginPath();
+                ctx.moveTo(x, y - size/2);
+                ctx.lineTo(x + size/2, y + size);
+                ctx.lineTo(x - size/2, y + size);
+                ctx.closePath();
+                ctx.fill();
+                
+                // Carrot top
+                ctx.fillStyle = '#66BB6A';
+                for (let i = -1; i <= 1; i++) {
+                    ctx.beginPath();
+                    ctx.moveTo(x + i * 1.5, y - size/2);
+                    ctx.lineTo(x + i * 4, y - size);
+                    ctx.lineTo(x + i * 3, y - size/2);
+                    ctx.closePath();
+                    ctx.fill();
+                }
+            }
+            
+            // Main draw function
+            function draw() {
+                // Clear canvas
+                ctx.clearRect(0, 0, width, height);
+                
+                // Fill background
+                ctx.fillStyle = config.backgroundColor;
+                ctx.beginPath();
+                ctx.rect(0, 0, width, height);
+                ctx.fill();
+                
+                // Draw plate
+                drawPlate();
+                
+                // Draw food items
+                drawFoodItems();
+                
+                // Animate
+                if (config.animate) {
+                    config.rotation += config.animationSpeed;
+                    requestAnimationFrame(draw);
+                }
+            }
+            
+            // Initialize
+            draw();
         });
     </script>
 </body>
