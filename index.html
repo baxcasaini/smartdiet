@@ -339,39 +339,54 @@ document.addEventListener('DOMContentLoaded', function() {
             background-color: rgba(255, 255, 255, 0.4);
         }
         
-        /* Language switching - basic rules */
-        [lang="en"] {
-            display: none;
+        /* Language Switching System - Fixed Version */
+        /* First, ensure only one language version shows at a time */
+        [lang="it"], [lang="en"] {
+            display: none !important; /* Hide everything by default */
+        }
+        
+        /* Show Italian content by default */
+        [lang="it"] {
+            display: block !important;
+        }
+        
+        /* When switched to English */
+        .lang-en [lang="en"] {
+            display: block !important;
         }
         
         .lang-en [lang="it"] {
-            display: none;
+            display: none !important;
         }
         
-        .lang-en [lang="en"] {
-            display: block;
+        /* When explicitly set to Italian */
+        .lang-it [lang="it"] {
+            display: block !important;
         }
         
-        /* Fix for inline elements */
+        .lang-it [lang="en"] {
+            display: none !important;
+        }
+        
+        /* Special case for inline elements */
         .lang-en span[lang="en"], 
-        .lang-en a[lang="en"], 
+        .lang-en a[lang="en"] {
+            display: inline-block !important;
+        }
+        
         .lang-it span[lang="it"], 
         .lang-it a[lang="it"] {
-            display: inline-block;
+            display: inline-block !important;
         }
         
-        /* Fix for headings and paragraphs */
-        h1[lang="en"], h1[lang="it"],
-        h2[lang="en"], h2[lang="it"],
-        h3[lang="en"], h3[lang="it"],
-        p[lang="en"], p[lang="it"] {
-            width: 100%;
-            text-align: center;
-            margin-left: auto;
-            margin-right: auto;
+        /* Fix for buttons */
+        .lang-en a.btn[lang="en"],
+        .lang-it a.btn[lang="it"] {
+            display: inline-block !important;
+            width: auto !important;
         }
         
-        /* Language alignment fixes - moved outside media query */
+        /* Fix alignment issues */
         .container {
             text-align: center !important;
         }
@@ -389,7 +404,6 @@ document.addEventListener('DOMContentLoaded', function() {
         .lang-it p[lang="it"] {
             text-align: center !important;
             width: 100% !important;
-            display: block !important;
         }
         
         .hero-content h2[lang="en"],
@@ -402,26 +416,13 @@ document.addEventListener('DOMContentLoaded', function() {
             margin-right: auto !important;
         }
         
-        /* Force center alignment for all language-specific elements */
-        [lang="en"], [lang="it"] {
-            text-align: center !important;
-        }
-        
         /* Fix header area specific alignment */
         header .container h1[lang="en"],
         header .container h1[lang="it"],
         header .container p[lang="en"],
         header .container p[lang="it"] {
             text-align: center !important;
-            display: block !important;
             width: 100% !important;
-        }
-        
-        /* Fix for buttons and special cases */
-        .lang-en a.btn[lang="en"],
-        .lang-it a.btn[lang="it"] {
-            display: inline-block !important;
-            width: auto !important;
         }
         
         /* Fix for roadmap items that need left alignment */
