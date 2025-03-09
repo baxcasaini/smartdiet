@@ -196,6 +196,11 @@
             padding: 2rem;
             padding-left: 3.5rem;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        
+        .steps {
+            counter-reset: step-counter;
         }
         
         .step::before {
@@ -219,6 +224,11 @@
         .roadmap {
             max-width: 800px;
             margin: 0 auto;
+            text-align: left;
+        }
+        
+        .roadmap-content {
+            text-align: left;
         }
         
         .roadmap-item {
@@ -310,12 +320,26 @@
             display: none;
         }
         
-        .lang-en [lang="en"] {
-            display: block;
+        .lang-en [lang="en"], .lang-it [lang="it"] {
+            display: inline-block;
+            width: 100%;
+            text-align: center;
         }
         
-        .lang-en span[lang="en"], .lang-en a[lang="en"], .lang-en h1[lang="en"], .lang-en h2[lang="en"], .lang-en h3[lang="en"], .lang-en p[lang="en"] {
-            display: inline;
+        [lang="en"], [lang="it"] {
+            margin: 0 auto;
+        }
+        
+        h1[lang="en"], h1[lang="it"],
+        h2[lang="en"], h2[lang="it"],
+        h3[lang="en"], h3[lang="it"] {
+            width: 100%;
+        }
+        
+        p[lang="en"], p[lang="it"] {
+            width: 100%;
+            margin-left: auto;
+            margin-right: auto;
         }
         
         @media (max-width: 768px) {
@@ -356,14 +380,14 @@
         </div>
     </section>
     
-    <section class="cta">
+    <section class="cta" style="background-color: #333;">
         <div class="container">
             <h2 lang="it">Pronto a migliorare la tua alimentazione?</h2>
             <h2 lang="en">Ready to improve your diet?</h2>
             <p lang="it">Inizia oggi il tuo percorso verso uno stile di vita più sano con SmartDiet.</p>
             <p lang="en">Start your journey toward a healthier lifestyle with SmartDiet today.</p>
-            <a href="https://t.me/smartdiet_bot" class="btn" lang="it">Avvia il bot su Telegram</a>
-            <a href="https://t.me/smartdiet_bot" class="btn" lang="en">Start the bot on Telegram</a>
+            <a href="https://t.me/smartdiet_bot" class="btn" style="background-color: #ffc107;" lang="it">Avvia il bot su Telegram</a>
+            <a href="https://t.me/smartdiet_bot" class="btn" style="background-color: #ffc107;" lang="en">Start the bot on Telegram</a>
         </div>
     </section>
     
