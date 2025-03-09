@@ -399,6 +399,52 @@ document.addEventListener('DOMContentLoaded', function() {
                 justify-content: center;
                 margin-bottom: 1rem;
             }
+
+            /* Add these styles to fix alignment issues when switching languages */
+            .container {
+                text-align: center !important;
+            }
+            
+            .header .container h1,
+            .header .container p {
+                text-align: center !important;
+                width: 100% !important;
+                display: block !important;
+            }
+            
+            .lang-en h1[lang="en"], 
+            .lang-en p[lang="en"],
+            .lang-it h1[lang="it"], 
+            .lang-it p[lang="it"] {
+                text-align: center !important;
+                width: 100% !important;
+                display: block !important;
+            }
+            
+            .hero-content h2[lang="en"],
+            .hero-content p[lang="en"],
+            .hero-content h2[lang="it"],
+            .hero-content p[lang="it"] {
+                text-align: center !important;
+                width: 100% !important;
+                margin-left: auto !important;
+                margin-right: auto !important;
+            }
+            
+            /* Force center alignment for all language-specific elements */
+            [lang="en"], [lang="it"] {
+                text-align: center !important;
+            }
+            
+            /* Fix header area specific alignment */
+            header .container h1[lang="en"],
+            header .container h1[lang="it"],
+            header .container p[lang="en"],
+            header .container p[lang="it"] {
+                text-align: center !important;
+                display: block !important;
+                width: 100% !important;
+            }
         }
     </style>
 </head>
