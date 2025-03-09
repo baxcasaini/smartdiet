@@ -1,5 +1,47 @@
 <!DOCTYPE html>
 <html lang="it">
+<script>
+// Language switcher functionality
+document.addEventListener('DOMContentLoaded', function() {
+    // Get language buttons
+    const langButtons = document.querySelectorAll('.language-btn');
+    
+    // Function to set language
+    function setLanguage(lang) {
+        // Remove current language class
+        document.body.classList.remove('lang-it', 'lang-en');
+        
+        // Add new language class
+        document.body.classList.add('lang-' + lang);
+        
+        // Update active state on buttons
+        langButtons.forEach(btn => {
+            if (btn.getAttribute('data-lang') === lang) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+            }
+        });
+        
+        // Store preference in localStorage for future visits
+        localStorage.setItem('preferred-language', lang);
+    }
+    
+    // Add click event listeners to language buttons
+    langButtons.forEach(btn => {
+        btn.addEventListener('click', function() {
+            const lang = this.getAttribute('data-lang');
+            setLanguage(lang);
+        });
+    });
+    
+    // Check for stored language preference
+    const storedLang = localStorage.getItem('preferred-language');
+    if (storedLang) {
+        setLanguage(storedLang);
+    }
+});
+</script>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
